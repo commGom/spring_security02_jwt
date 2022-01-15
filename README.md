@@ -37,3 +37,19 @@
 - 3. FilterConfig 생성하여 Filter 적용할 수 있다.
 
 - SecurityConfig에 추가한 http. addFilterBefore(), addFilterAfter()가 먼저 실행된다.
+
+## 5. jwt 임시 토큰 테스트
+- 1. downcasting해서 하기
+- 2. 요청의 헤더에서 Authorization 값 받아오기
+- 3. 요청 방식이 post일 때만 동작 시키기위한 조건문 작성 
+     ```
+     테스트했을 때는 모든 요청에 대해 filterChain을 이용하여 doFilter 동작되나, 
+     앞으로는 원하는 토큰이 Authroization(서버에서 정해놓은 값)이 왔을 때에만 dofilter동작하도록 설정하여 처리할 것이다.
+     ```
+- 4. 약식으로 원하는 로직 처리하
+- 5. Security가 시작되기전에 filter를 동작하게 하여 Header의 Authorization에 Token을 가지고 있는지 처리하기도록 하기
+    
+## 6. 로그인 진행
+### 1.  토큰 : id,pw가 정상적으로 들어와서 로그인이 완료되면 토큰을 만들어주고 그걸 응답을 해준다.
+### 2. 요청할 때 마다 header에 Authorization에 value값으로 토큰을 가져오면, 이 토큰이 서버에서 만든 토큰인지 검증만 하면 된다. (RSA, HS245)
+

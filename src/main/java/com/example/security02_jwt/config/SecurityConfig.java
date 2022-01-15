@@ -1,6 +1,7 @@
 package com.example.security02_jwt.config;
 
 import com.example.security02_jwt.filter.MyFilter1;
+import com.example.security02_jwt.filter.MyFilter3;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.filter.CorsFilter;
 
 @Configuration
@@ -20,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 //        http.addFilterBefore(new MyFilter1(), BasicAuthenticationFilter.class);
+        http.addFilterBefore(new MyFilter3(), SecurityContextPersistenceFilter.class);  //Security가 동작하기전에 필터가 동작하도록
         http.csrf().disable();
         //세션을 사용하지 않겠다 stateless 서버로 사용, form login 안쓴다
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
