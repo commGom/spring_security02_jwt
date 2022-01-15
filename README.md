@@ -28,3 +28,12 @@
 확인 인증이 필요없는 url의 경우 session이 없기 때문에 바로 실행된다.
 
 권한이 필요한 것은 아직 실행되지않음.(403 error)
+
+## 4. filter 만들기
+- 1. filter 만들기
+
+- 2. SecurityConfig에서 filter 설정 (addFilterBefore(), addFilterAfter()) → 굳이 SecurityConfig에 Filter를 해줄 필요 없다.
+
+- 3. FilterConfig 생성하여 Filter 적용할 수 있다.
+
+- SecurityConfig에 추가한 http. addFilterBefore(), addFilterAfter()가 먼저 실행된다.
