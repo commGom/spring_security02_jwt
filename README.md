@@ -62,4 +62,16 @@
   ([http://localhost:8080/login](http://localhost:8080/login) 요청시 extends UsernamePasswordAuthenticationFilter의 attemptAuthentication(HttpServletRequest request, HttpServletResponse response) 메서드 호출)
 
 - SecurityConfig에 addFilter로 추가
+---
+### 회원가입 처리 빠진 듯 controller에 join 추가
+---
+6-2. attemptAuthentication() 메서드에서 로그인 처리
+- 1. username과 password를 받는다.
+    - ObjectMapper 이용하여 JSON을 객체로 매핑
+- 2. 정상인지 로그인 시도 (AuthenticationManager로 로그인 시도하면 PrincipalDetailsService가 호출되고 loadUserByUsername()메서도 호출)
 
+- 3. authentication를 세션에 담고(시큐리티에서 권한 관리를 위하여)
+    - 권한 처리를 위하여 Authentication authentication = authenticationManager.authenticate(authenticationToken)을 리턴하여 세션에 넣는다
+- 4. JWT 토큰을 만들어서 응답
+    - attemptAuthentication실행 후 인증이 정상적으로 되었으면 successfulAuthentication가 호출된다.
+    - JWT토큰을 만들어서 request요청한 사용자에서 JWT토큰을 response 해준다.
