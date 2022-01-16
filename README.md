@@ -75,3 +75,8 @@
 - 4. JWT 토큰을 만들어서 응답
     - attemptAuthentication실행 후 인증이 정상적으로 되었으면 successfulAuthentication가 호출된다.
     - JWT토큰을 만들어서 request요청한 사용자에서 JWT토큰을 response 해준다.
+    
+## 7. JWT 토큰 만들고, JWT 보내면서 응답하기
+        1. Authentication 객체를 가져와서 JWT 토큰을 만들 것이다.
+        2. JWT Token 만들기 (JWT 라이브러리 이용 java-jwt) Builder 패턴
+        3. response.addHeader에 Authorization:jwtToken 값 넣어서 확인

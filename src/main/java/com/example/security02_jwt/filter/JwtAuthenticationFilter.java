@@ -1,5 +1,7 @@
 package com.example.security02_jwt.filter;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.example.security02_jwt.config.auth.PrincipalDetails;
 import com.example.security02_jwt.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Date;
 
 // Spring security에 UsernamePasswordAuthenticationFilter가 있어서
 // login 요청해서 username, password 전송하면 (post)
@@ -68,6 +71,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         System.out.println("인증이 완료 되었음 JWT TOKEN response 해주면된다.");
+
+//        JWT Token 만들고 response 하기
+//        1. Authentication 객체를 가져와서 JWT 토큰을 만들 것이다.
+//        2. JWT Token 만들기 (JWT 라이브러리 이용 java-jwt) Builder 패턴
+//        3. response.addHeader에 Authorization:jwtToken 값 넣어서 확인
+        PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
+        String jwtToken= JWT.create()
+                .withSubject("토큰")
+                .withExpiresAt(new Date(System.currentTimeMillis()+(60000)*10)) //토큰 만료시간 10분
+                .withClaim("id",principalDetails.getUser().getId())
+                .withClaim("username",principalDetails.getUser().getUsername())
+                .sign(Algorithm.HMAC512("commGom"));   //내 서버만 아는 고유한 시크릿 키 값(sign하기 위해서)
+
+        response.addHeader("Authorization","Bearer "+jwtToken);
         super.successfulAuthentication(request, response, chain, authResult);
     }
 }

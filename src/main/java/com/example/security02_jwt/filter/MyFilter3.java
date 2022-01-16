@@ -18,15 +18,16 @@ public class MyFilter3 implements Filter {
         req.setCharacterEncoding("UTF-8");
         res.setCharacterEncoding("UTF-8");
         if (req.getMethod().equals("POST")){
-            String headerAuth = req.getHeader("Authorization");
-            System.out.println(headerAuth);
-
-            if (headerAuth.equals("course")){
-                filterChain.doFilter(req,res);   //계속 이어서 하도록 하기 위해서 chain 이용
-            }else{
-                PrintWriter printWriter=res.getWriter();
-                printWriter.println("인증 안 됨");
-            }
+            filterChain.doFilter(req,res);   //계속 이어서 하도록 하기 위해서 chain 이용
+//            String headerAuth = req.getHeader("Authorization");
+//            System.out.println(headerAuth);
+//
+//            if (headerAuth.equals("course")){
+//                filterChain.doFilter(req,res);   //계속 이어서 하도록 하기 위해서 chain 이용
+//            }else{
+//                PrintWriter printWriter=res.getWriter();
+//                printWriter.println("인증 안 됨");
+//            }
 
         }
 
