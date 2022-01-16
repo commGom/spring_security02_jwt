@@ -1,8 +1,10 @@
 package com.example.security02_jwt.config;
 
 import com.example.security02_jwt.filter.JwtAuthenticationFilter;
+import com.example.security02_jwt.filter.JwtAuthorizationFilter;
 import com.example.security02_jwt.filter.MyFilter1;
 import com.example.security02_jwt.filter.MyFilter3;
+import com.example.security02_jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +24,7 @@ import org.springframework.web.filter.CorsFilter;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private final CorsFilter corsFilter;
+    private final UserRepository userRepository;
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -38,7 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter)
                 .formLogin().disable()
                 .httpBasic().disable()
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))    //AuthenticationFilter
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(),userRepository))
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
