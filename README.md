@@ -52,4 +52,14 @@
 ## 6. 로그인 진행
 ### 1.  토큰 : id,pw가 정상적으로 들어와서 로그인이 완료되면 토큰을 만들어주고 그걸 응답을 해준다.
 ### 2. 요청할 때 마다 header에 Authorization에 value값으로 토큰을 가져오면, 이 토큰이 서버에서 만든 토큰인지 검증만 하면 된다. (RSA, HS245)
+6-1. UsernamePasswordAuthenticationFilter는 login 요청시 동작확인
+
+- PrincipalDetails
+
+- PrincipalDetailsService
+
+- JwtAuthenticationFilter : filter 생성
+  ([http://localhost:8080/login](http://localhost:8080/login) 요청시 extends UsernamePasswordAuthenticationFilter의 attemptAuthentication(HttpServletRequest request, HttpServletResponse response) 메서드 호출)
+
+- SecurityConfig에 addFilter로 추가
 

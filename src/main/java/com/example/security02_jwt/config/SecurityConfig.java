@@ -1,5 +1,6 @@
 package com.example.security02_jwt.config;
 
+import com.example.security02_jwt.filter.JwtAuthenticationFilter;
 import com.example.security02_jwt.filter.MyFilter1;
 import com.example.security02_jwt.filter.MyFilter3;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilter(corsFilter)
                 .formLogin().disable()
                 .httpBasic().disable()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**")
                 .access("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
